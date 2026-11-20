@@ -41,11 +41,8 @@ No introduzcas frameworks, build tools ni dependencias externas salvo autorizaci
 
 ## Escala de complejidad
 
-Pendiente de calibrar. Espacio reservado para niveles del 0 al 5; todavía no se definen criterios definitivos.
+La escala vive en `ESCALA.md` (ECE‑4D, niveles 0–5, ejes P, O, I y D).
 
-- Nivel 0: sin definir
-- Nivel 1: sin definir
-- Nivel 2: sin definir
-- Nivel 3: sin definir
-- Nivel 4: sin definir
-- Nivel 5: sin definir
+Todo experimento debe etiquetarse con los cuatro ejes: `P:x, O:y, I:z, D:w → global:n`, donde el nivel global es el máximo de los cuatro.
+
+Si un experimento requiere D:4 o D:5 y no estaba previsto, parar y consultar. No introducir Three.js ni librerías de 3D sin autorización explícita.
