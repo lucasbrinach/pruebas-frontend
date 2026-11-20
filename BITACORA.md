@@ -37,7 +37,17 @@ Estructura de ejemplo para cada entrada:
 
 - Fecha: 2026-11-20
 - Nivel esperado: `P:3, O:3, I:3, D:3 → global:3`
-- Nivel real: `P:3, O:3, I:3, D:3 → global:3` (coincide con lo planeado).
+- Nivel real: `P:3, O:3, I:3, D:3 → global:3` (coincide con lo planeado; D queda como ejecución débil por la percepción de volumen, según veredicto humano).
 - Cambio: Creación del primer experimento del repo: hero de 100dvh con parallax de cuatro capas, ilustración SVG animada, tilt por cursor/touch y profundidad CSS 3D.
 - Archivos: `proyectos/hero-cinetico/index.html` (creado), `proyectos/hero-cinetico/styles.css` (creado), `proyectos/hero-cinetico/app.js` (creado), `proyectos/hero-cinetico/README.md` (creado), `README.md` (actualizado), `BITACORA.md` (actualizado).
 - Notas: Sin librerías ni dependencias. Verificación local: `node --check` correcto, cuatro archivos servidos con HTTP 200 por servidor local, prueba con DOM simulado confirmó respuesta a scroll (capas con distinta velocidad) y cursor (tilt con lerp), pausa al ocultar pestaña y estado estático con `prefers-reduced-motion`. Chrome headless abrió la página sin errores de JavaScript de la página (solo avisos GPU propios del entorno headless). FPS: objetivo 60 fps en desktop moderno; no se pudo instrumentar una medición fiable en este entorno (headless sin reloj de frames útil), por lo que se dejó un contador visible en la esquina inferior derecha para medirlo en DevTools. Sin push ni cambios de remoto.
+- Cierre / veredicto (feedback humano): FPS 60 estables; suavizado (lerp) correcto y elegante; profundidad 3D dudosa (capas 2D con sombras, sin volumen/perspectiva real); límite de inclinación correcto; A11y de movimiento reducido perfecta sin recargar; responsive aprobado en Safari (modo responsivo). Conclusión: CSS 3D (`preserve-3d`) sirve para parallax y engaños visuales pero no da volumen real; el paso lógico es el 3D declarativo nativo con glTF/GLB. Ver detalle en `proyectos/hero-cinetico/VEREDICTO.md`.
+
+## Proyecto: modelo-3d
+
+- Fecha: 2026-11-20
+- Nivel esperado: `P:1, O:2, I:2, D:2 → global:2`
+- Nivel real: `P:1, O:2, I:2, D:2 → global:2` (inicial, a validar en navegador real por el humano).
+- Cambio: Creación del experimento de 3D declarativo nativo con `<model-viewer>` (CDN, módulo) y modelo GLB público; hero minimalista con auto-rotación, controles de cámara, sombra e iluminación.
+- Archivos: `proyectos/modelo-3d/index.html` (creado), `proyectos/modelo-3d/styles.css` (creado), `proyectos/modelo-3d/README.md` (creado), `proyectos/hero-cinetico/VEREDICTO.md` (creado), `README.md` (actualizado), `BITACORA.md` (actualizado).
+- Notas: Sin paquetes npm; el módulo y el modelo se enlazan desde URLs públicas. Comprobación previa de conectividad en este entorno: CDN `200 text/javascript; charset=UTF-8` y `Astronaut.glb` `200 model/gltf-binary`. No se observó que el navegador se quejara de la carga en esta verificación (solo cabeceras y disponibilidad); la ausencia de quejas en Safari o en navegación interactiva queda pendiente de prueba por el humano. Sin push ni cambios de remoto.

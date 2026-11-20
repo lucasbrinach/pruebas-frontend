@@ -1,0 +1,92 @@
+/* 3D declarativo: el navegador y el Web Component hacen el trabajo. */
+
+:root {
+  color-scheme: dark;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #080b14;
+  color: #f4f7ff;
+}
+
+.hero {
+  position: relative;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(99, 102, 241, 0.22), transparent 52%),
+    linear-gradient(180deg, #0d1224 0%, #080b14 100%);
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  animation: fade-in 900ms ease both;
+}
+
+model-viewer {
+  width: min(92vw, 900px);
+  height: min(78dvh, 720px);
+  background: transparent;
+  --poster-color: transparent;
+}
+
+model-viewer:focus-visible {
+  outline: 3px solid #a8f0ff;
+  outline-offset: -6px;
+}
+
+.copy {
+  position: absolute;
+  z-index: 2;
+  top: clamp(24px, 6vw, 64px);
+  left: clamp(24px, 6vw, 72px);
+  pointer-events: none;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9fc8ff;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.hint {
+  margin: 12px 0 0;
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  color: #c7d5f5;
+}
+
+.credit {
+  position: absolute;
+  right: 20px;
+  bottom: 16px;
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: rgba(199, 213, 245, 0.65);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage { animation: none; }
+}

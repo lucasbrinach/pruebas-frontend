@@ -19,6 +19,10 @@ Cada proyecto es autocontenido: no depende de archivos de otros experimentos.
 
 Hero de pantalla completa con parallax, ilustración SVG animada, tilt por cursor y profundidad CSS 3D.
 
+### modelo-3d
+
+Hero minimalista con 3D declarativo nativo (`<model-viewer>` y un GLB público), con rotación automática y controles de cámara.
+
 ## Cómo visualizar un experimento
 
 Abre `proyectos/<slug>/index.html` directamente en el navegador o sirve la carpeta con un servidor local simple, por ejemplo:
