@@ -47,7 +47,9 @@ Estructura de ejemplo para cada entrada:
 
 - Fecha: 2026-11-20
 - Nivel esperado: `P:1, O:2, I:2, D:2 → global:2`
-- Nivel real: `P:1, O:2, I:2, D:2 → global:2` (inicial, a validar en navegador real por el humano).
+- Nivel real: `P:1, O:2, I:2, D:2 → global:2`.
 - Cambio: Creación del experimento de 3D declarativo nativo con `<model-viewer>` (CDN, módulo) y modelo GLB público; hero minimalista con auto-rotación, controles de cámara, sombra e iluminación.
 - Archivos: `proyectos/modelo-3d/index.html` (creado), `proyectos/modelo-3d/styles.css` (creado), `proyectos/modelo-3d/README.md` (creado), `proyectos/hero-cinetico/VEREDICTO.md` (creado), `README.md` (actualizado), `BITACORA.md` (actualizado).
 - Notas: Sin paquetes npm; el módulo y el modelo se enlazan desde URLs públicas. Comprobación previa de conectividad en este entorno: CDN `200 text/javascript; charset=UTF-8` y `Astronaut.glb` `200 model/gltf-binary`. No se observó que el navegador se quejara de la carga en esta verificación (solo cabeceras y disponibilidad); la ausencia de quejas en Safari o en navegación interactiva queda pendiente de prueba por el humano. Sin push ni cambios de remoto.
+- Cierre / veredicto (feedback humano): Volumen real confirmado; luces/sombras fallan (plástico flotando, sin sombra visible en el suelo); interacción excelente (arrastre y zoom con trackpad); auto-rotación correcta (pausa/reanuda); rendimiento rápido sin tirones en Safari; responsive correcto; A11y con instrucción clara. Conclusión: `<model-viewer>` es viable sin librerías y la interacción es fluida; el problema era de configuración/entorno (falta de piso y sombra proyectada), no de la tecnología. Ver `proyectos/modelo-3d/VEREDICTO.md`.
+- Parche aplicado (post-veredicto): `shadow-intensity="1.5"` y `shadow-softness="0.8"` en `<model-viewer>` (se mantiene `environment-image="neutral"`), y fondo degradado inferior en `.hero::before` como "piso" visual para registrar la sombra. Archivos del parche: `proyectos/modelo-3d/index.html`, `proyectos/modelo-3d/styles.css`, `proyectos/modelo-3d/VEREDICTO.md`, `BITACORA.md`, `docs/bitacora-sesion.md`. Verificación del parche pendiente en navegador real.

@@ -18,14 +18,34 @@ body {
   height: 100dvh;
   min-height: 100dvh;
   overflow: hidden;
+  isolation: isolate;
   background:
     radial-gradient(circle at 50% 38%, rgba(99, 102, 241, 0.22), transparent 52%),
     linear-gradient(180deg, #0d1224 0%, #080b14 100%);
 }
 
+/* Piso visual para registrar la sombra proyectada por model-viewer. */
+.hero::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 52%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(196, 208, 236, 0.1) 0%,
+    rgba(145, 162, 206, 0.05) 28%,
+    rgba(13, 18, 36, 0) 100%
+  );
+}
+
 .stage {
   position: absolute;
   inset: 0;
+  z-index: 1;
   display: grid;
   place-items: center;
   animation: fade-in 900ms ease both;
