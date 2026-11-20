@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hero cinético — Laboratorio web</title>
+  <meta name="description" content="Experimento de hero cinético: parallax por scroll, ilustración SVG animada, tilt por cursor y profundidad CSS 3D.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="hero__scene" id="scene" aria-hidden="true">
+        <div class="layer layer--sky" data-speed="0.08" data-z="-180">
+          <span class="glow glow--a"></span>
+          <span class="glow glow--b"></span>
+        </div>
+
+        <div class="layer layer--shapes" data-speed="0.22" data-z="-90">
+          <span class="ring ring--one"></span>
+          <span class="ring ring--two"></span>
+          <span class="bar"></span>
+        </div>
+
+        <div class="layer layer--subject" data-speed="0.45" data-z="30">
+          <svg class="subject" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración abstracta de un astro con un anillo orbits">
+            <defs>
+              <linearGradient id="cuerpo" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#a8f0ff"/>
+                <stop offset="0.55" stop-color="#6c8cff"/>
+                <stop offset="1" stop-color="#a855f7"/>
+              </linearGradient>
+              <linearGradient id="anillo" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#ffd6a5" stop-opacity="0"/>
+                <stop offset="0.5" stop-color="#ffd6a5" stop-opacity="0.95"/>
+                <stop offset="1" stop-color="#ffd6a5" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g class="subject__float">
+              <ellipse cx="210" cy="332" rx="118" ry="15" fill="#070b1a" opacity="0.45"/>
+              <g class="subject__breath">
+                <circle cx="210" cy="196" r="106" fill="url(#cuerpo)" opacity="0.16"/>
+                <circle cx="210" cy="196" r="76" fill="url(#cuerpo)"/>
+                <path d="M170 160c18-24 52-34 80-20-30 2-54 18-68 44-8 14-12 30-12 46-14-24-16-50 0-70z" fill="#fff" opacity="0.32"/>
+              </g>
+              <ellipse class="subject__ring" cx="210" cy="210" rx="150" ry="42" fill="none" stroke="url(#anillo)" stroke-width="10"/>
+              <g class="subject__spark">
+                <circle cx="318" cy="126" r="7" fill="#fff3c4"/>
+                <circle cx="96" cy="242" r="5" fill="#bff5ff"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="layer layer--particles" data-speed="0.8" data-z="110">
+          <span class="particle" style="--x:12%; --y:18%; --s:6px; --d:0s"></span>
+          <span class="particle" style="--x:78%; --y:12%; --s:4px; --d:0.7s"></span>
+          <span class="particle" style="--x:88%; --y:58%; --s:7px; --d:1.4s"></span>
+          <span class="particle" style="--x:22%; --y:74%; --s:5px; --d:2.1s"></span>
+          <span class="particle" style="--x:58%; --y:84%; --s:4px; --d:0.4s"></span>
+          <span class="particle" style="--x:6%; --y:46%; --s:3px; --d:1.8s"></span>
+        </div>
+      </div>
+
+      <div class="hero__copy">
+        <p class="eyebrow">Experimento 01 · ECE·4D</p>
+        <h1 id="hero-title">Hero cinético</h1>
+        <p class="subtitle">Capas que respiran, scroll que desplaza y un cursor que inclina el espacio.</p>
+        <div class="actions">
+          <button class="cta" id="cta" type="button">Explorar</button>
+          <button class="motion-toggle" id="motion-toggle" type="button" hidden>Activar inclinación</button>
+        </div>
+      </div>
+
+      <output class="fps" id="fps" aria-hidden="true">— fps</output>
+      <p class="hint" aria-hidden="true">Scroll · mueve el cursor</p>
+    </section>
+
+    <section class="after" id="siguiente" aria-labelledby="after-title">
+      <div>
+        <h2 id="after-title">Fuera del hero</h2>
+        <p>El movimiento termina aquí. El contenido se lee igual sin animación.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

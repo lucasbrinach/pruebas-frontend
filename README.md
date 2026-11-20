@@ -15,7 +15,9 @@ Cada proyecto es autocontenido: no depende de archivos de otros experimentos.
 
 ## Proyectos
 
-Aún no hay proyectos registrados.
+### hero-cinetico
+
+Hero de pantalla completa con parallax, ilustración SVG animada, tilt por cursor y profundidad CSS 3D.
 
 ## Cómo visualizar un experimento
 

@@ -1,0 +1,325 @@
+/* Hero cinético: capas, SVG inline y CSS 3D. Sin dependencias. */
+
+:root {
+  color-scheme: dark;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: #070b1a;
+  color: #f4f7ff;
+}
+
+.hero {
+  position: relative;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  perspective: 1000px;
+  perspective-origin: 50% 42%;
+  background: radial-gradient(circle at 50% 30%, #172046 0%, #0a1029 48%, #070b1a 100%);
+  touch-action: pan-y;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(7, 11, 26, 0.82) 0%, rgba(7, 11, 26, 0.1) 55%, rgba(7, 11, 26, 0.45) 100%);
+}
+
+.hero__scene {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.layer {
+  position: absolute;
+  inset: -12%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.layer--sky { background: radial-gradient(circle at 70% 25%, rgba(99, 102, 241, 0.28), transparent 45%); }
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+}
+
+.glow--a {
+  width: 46vw;
+  height: 46vw;
+  left: 42%;
+  top: 4%;
+  background: #4f46e5;
+}
+
+.glow--b {
+  width: 34vw;
+  height: 34vw;
+  left: 8%;
+  top: 42%;
+  background: #0891b2;
+  opacity: 0.32;
+}
+
+.ring {
+  position: absolute;
+  border: 1px solid rgba(190, 214, 255, 0.22);
+  border-radius: 50%;
+}
+
+.ring--one {
+  width: 62vmin;
+  height: 62vmin;
+  left: 48%;
+  top: 14%;
+  animation: ring-pulse 9s ease-in-out infinite;
+}
+
+.ring--two {
+  width: 88vmin;
+  height: 88vmin;
+  left: 35%;
+  top: 2%;
+  border-style: dashed;
+  opacity: 0.5;
+  animation: ring-pulse 13s ease-in-out infinite reverse;
+}
+
+.bar {
+  position: absolute;
+  width: 1px;
+  height: 62%;
+  left: 62%;
+  top: 14%;
+  background: linear-gradient(transparent, rgba(255, 214, 165, 0.35), transparent);
+}
+
+.layer--subject {
+  display: grid;
+  place-items: center;
+}
+
+.subject {
+  width: min(62vw, 460px);
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 24px 50px rgba(79, 70, 229, 0.4));
+}
+
+/* Tres animaciones independientes del subjects. */
+.subject__float {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: float-y 6s ease-in-out infinite;
+}
+
+.subject__breath {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: breathe 4.5s ease-in-out infinite;
+}
+
+.subject__ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: rotate(-18deg);
+  animation: ring-tilt 9s ease-in-out infinite;
+}
+
+.subject__spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 2.8s ease-in-out infinite;
+}
+
+.particle {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: #e6f6ff;
+  box-shadow: 0 0 12px #8fd8ff;
+  opacity: 0.75;
+  animation: twinkle 3.2s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.055); }
+}
+
+@keyframes blink {
+  0%, 44%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+
+@keyframes ring-tilt {
+  0%, 100% { transform: rotate(-18deg) scale(1); }
+  50% { transform: rotate(-13deg) scale(1.04); }
+}
+
+@keyframes ring-pulse {
+  0%, 100% { transform: scale(0.97); opacity: 0.45; }
+  50% { transform: scale(1.03); opacity: 0.8; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: translateY(0); }
+  50% { opacity: 0.9; transform: translateY(-10px); }
+}
+
+.hero__copy {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  height: 100%;
+  padding: clamp(24px, 6vw, 72px);
+  padding-bottom: clamp(64px, 12vh, 120px);
+  pointer-events: none;
+}
+
+.hero__copy > * { pointer-events: auto; }
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9fc8ff;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.6rem, 8vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.subtitle {
+  max-width: 36ch;
+  margin: 18px 0 26px;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.5;
+  color: #c7d5f5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.cta,
+.motion-toggle {
+  padding: 12px 22px;
+  border: 1px solid rgba(255, 214, 165, 0.5);
+  border-radius: 999px;
+  background: #ffd6a5;
+  color: #1b1630;
+  font-weight: 650;
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.motion-toggle {
+  background: transparent;
+  color: #ffd6a5;
+}
+
+.cta:hover { transform: translateY(-2px); background: #ffe4c2; }
+.motion-toggle:hover { background: rgba(255, 214, 165, 0.12); }
+
+.cta:focus-visible,
+.motion-toggle:focus-visible {
+  outline: 3px solid #a8f0ff;
+  outline-offset: 4px;
+}
+
+.fps {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  z-index: 6;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: rgba(199, 213, 245, 0.7);
+}
+
+.hint {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  z-index: 6;
+  margin: 0;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: rgba(199, 213, 245, 0.6);
+}
+
+.after {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 32px;
+  background: #0b1026;
+  text-align: center;
+}
+
+.after h2 { margin: 0 0 10px; font-size: clamp(1.8rem, 4vw, 3rem); }
+.after p { margin: 0; color: #aebfe6; }
+
+/* Pausa de animaciones CSS cuando el hero sale de pantalla o la pestaña se oculta. */
+.hero.is-paused *,
+.hero.is-paused *::before,
+.hero.is-paused *::after { animation-play-state: paused !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .hero *,
+  .hero *::before,
+  .hero *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .hero__scene,
+  .layer { transform: none !important; }
+}
+
+@media (max-width: 640px) {
+  .subject { width: 86vw; }
+  .hint { display: none; }
+}
