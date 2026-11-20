@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scroll 3D Astronaut — Laboratorio web</title>
+  <meta name="description" content="Viaje espacial con scroll: astronauta 3D que baja y astros que suben en parallax.">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js"></script>
+</head>
+<body>
+  <main class="scroll-space" id="scroll-space">
+    <div class="stage" id="stage">
+      <div class="stars" aria-hidden="true"></div>
+
+      <div class="layer layer--far" data-speed-up="60" aria-hidden="true">
+        <svg class="astro planet" viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Planeta con anillo">
+          <defs>
+            <radialGradient id="planet-body" cx="35%" cy="30%" r="70%">
+              <stop offset="0" stop-color="#ffe1b8"/>
+              <stop offset="0.55" stop-color="#d98f4e"/>
+              <stop offset="1" stop-color="#6b3316"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="130" cy="96" rx="108" ry="22" fill="none" stroke="#f3cf8f" stroke-width="10" opacity="0.55" transform="rotate(-14 130 96)"/>
+          <circle cx="130" cy="90" r="46" fill="url(#planet-body)"/>
+          <ellipse cx="130" cy="96" rx="108" ry="22" fill="none" stroke="#fff1cf" stroke-width="4" opacity="0.7" transform="rotate(-14 130 96)"/>
+        </svg>
+      </div>
+
+      <div class="layer layer--mid" data-speed-up="95" aria-hidden="true">
+        <svg class="astro asteroid" viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Asteroide con un marciano">
+          <path d="M20 78c2-24 18-46 52-50 34-4 54 18 54 42 0 26-22 44-56 42C38 110 18 100 20 78z" fill="#8d7b68"/>
+          <circle cx="48" cy="72" r="7" fill="#6e5c4b"/>
+          <circle cx="78" cy="86" r="5" fill="#6e5c4b"/>
+          <g class="alien">
+            <line x1="84" y1="44" x2="76" y2="28" stroke="#7cff9a" stroke-width="3"/>
+            <line x1="92" y1="44" x2="100" y2="28" stroke="#7cff9a" stroke-width="3"/>
+            <circle cx="76" cy="26" r="3" fill="#7cff9a"/>
+            <circle cx="100" cy="26" r="3" fill="#7cff9a"/>
+            <ellipse cx="88" cy="52" rx="12" ry="14" fill="#7cff9a"/>
+            <circle cx="84" cy="50" r="2.5" fill="#10261a"/>
+            <circle cx="92" cy="50" r="2.5" fill="#10261a"/>
+          </g>
+        </svg>
+
+        <svg class="astro little-prince" viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="El planeta del Principito con un volcán y una rosa">
+          <circle cx="80" cy="150" r="48" fill="#7bc6ff"/>
+          <ellipse cx="80" cy="178" rx="36" ry="8" fill="#4d8dbd" opacity="0.4"/>
+          <path d="M68 150 L80 112 L92 150 Z" fill="#6b4a3a"/>
+          <path d="M76 150 L80 126 L84 150 Z" fill="#8b5a46"/>
+          <g class="rose">
+            <line x1="112" y1="150" x2="112" y2="126" stroke="#4caf50" stroke-width="3"/>
+            <path d="M112 140c6-6 12 0 6 6" fill="#4caf50"/>
+            <circle cx="112" cy="120" r="7" fill="#ff6fae"/>
+            <circle cx="109" cy="118" r="3" fill="#ffc1dc"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="layer layer--near" data-speed-up="140" aria-hidden="true">
+        <svg class="astro birds" viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aves extraterrestres">
+          <path d="M20 40 L46 58 L72 40" fill="none" stroke="#d9f2ff" stroke-width="6" stroke-linecap="round"/>
+          <path d="M120 28 L150 48 L180 28" fill="none" stroke="#ffd6a5" stroke-width="6" stroke-linecap="round"/>
+          <path d="M150 70 L170 84 L190 70" fill="none" stroke="#c6b5ff" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="astronaut-wrap" id="astronaut" data-speed-down="80">
+        <model-viewer
+          src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+          alt="Modelo 3D de un astronauta que desciende por el espacio."
+          camera-controls
+          auto-rotate
+          shadow-intensity="1.2"
+          shadow-softness="0.8"
+          environment-image="neutral"
+          camera-orbit="25deg 75deg 105%"
+          interaction-prompt="none">
+        </model-viewer>
+      </div>
+
+      <div class="titles" aria-live="polite">
+        <h1 class="title title--a" data-show-start="0" data-show-end="0.35">El viaje</h1>
+        <p class="title title--b" data-show-start="0.55" data-show-end="0.95">El Principito</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

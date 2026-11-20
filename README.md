@@ -23,6 +23,10 @@ Hero de pantalla completa con parallax, ilustración SVG animada, tilt por curso
 
 Hero minimalista con 3D declarativo nativo (`<model-viewer>` y un GLB público), con rotación automática y controles de cámara.
 
+### scroll-3d-astronaut
+
+Viaje espacial con scroll: astronauta 3D que desciende mientras los astros SVG/CSS ascienden a distintas velocidades.
+
 ## Cómo visualizar un experimento
 
 Abre `proyectos/<slug>/index.html` directamente en el navegador o sirve la carpeta con un servidor local simple, por ejemplo:
