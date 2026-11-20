@@ -1,78 +1,197 @@
-# Escala de Complejidad de Experimentos — ECE‑4D 0–5
+# Escala de Complejidad de Experimentos — ECE·4D 0–5
 
-Cuatro ejes independientes: **P** (parallax/scroll), **O** (objetos animados), **I** (interacción) y **D** (3D). El nivel global es el máximo de los cuatro.
+Esta escala define **cómo medimos la complejidad** de cada experimento del repo
+y **cuándo conviene parar y evaluar una skill o librería nueva**.
 
-Etiqueta: `P:x, O:y, I:z, D:w → global:n`.
+Es la base de nuestro conocimiento: antes de empezar un experimento, el agente
+declara el nivel esperado. Al terminarlo, declara el nivel real. Si se desvía,
+se anota en la bitácora y se explica por qué.
 
-## Niveles
+---
 
-### 0 Reposo
+## Los cuatro ejes
 
-- Descripción breve: contenido estático, sin movimiento ni 3D.
-- Ejemplos: página solo HTML/CSS; galería de imágenes; texto con estilos. Sin 3D (`D:0`).
-- Técnicas: HTML semántico, CSS basic.
-- Riesgos: casi ninguno; eventual sobrecarga visual por exceso de contenido.
-- ¿Pide skill?: No.
+Cada experimento se evalúa en cuatro ejes independientes. El **nivel global**
+es el máximo de los cuatro (no el promedio: el eje más exigente manda).
 
-### 1 Declarativa
+| Eje | Qué mide | Rango |
+|-----|----------|-------|
+| **P** | Parallax y animaciones ligadas al scroll | 0–5 |
+| **O** | Objetos animados (ilustraciones, sprites, elementos que se mueven solos) | 0–5 |
+| **I** | Interacción (mouse, touch, teclado, gestos) | 0–5 |
+| **D** | 3D (modelos, escenas, shaders) | 0–5 |
 
-- Descripción breve: el navegador hace el trabajo; el 3D es estático (`D:1` = `<model>` o `<model-viewer>` sin interacción).
-- Ejemplos: modelo USDZ/GLB mostrado como una imagen más; `<model src="pieza.usdz">` con `<img>` de fallback; ficha de producto con modelo fijo.
-- Técnicas: elemento nativo `<model>`, Web Component `<model-viewer>`, `<source>` por MIME type, fallback `<img>`.
-- Riesgos: peso del asset, soporte desigual entre navegadores, necesidad de fallback.
-- ¿Pide skill?: No.
+**Etiqueta de un experimento:**
+P:3, O:2, I:3, D:0 → global:3
 
-### 2 Imperativa simple
+Se anota **antes de empezar** (nivel esperado) y **al terminar** (nivel real)
+en `BITACORA.md`.
 
-- Descripción breve: un poco de JavaScript para controlar lo que el componente ya sabe hacer (`D:2` = `<model>` con órbita/zoom/play de animación pregrabada).
-- Ejemplos: visor con `stagemode="orbit"`; botón de play/reverse de una animación horneada en el USDZ; zoom acotado con API nativa.
-- Técnicas: atributos del elemento (`stagemode`), `model.play()`, `playbackRate`, `ready`, transformaciones simples vía `entityTransform`.
-- Riesgos: recorte de geometría al rotar, APIs aún cambiantes, assets pesados.
-- ¿Pide skill?: No.
+---
 
-### 3 Scroll/cursor
+## Los seis niveles
 
-- Descripción breve: movimiento ligado al scroll o al cursor, sin motores externos (`D:3` = 3D declarativo animado por scroll/interacción; CSS 3D con `preserve-3d` y `perspective`).
-- Ejemplos: tarjetas con `rotateX`/`rotateY` según scroll; `<model>` cuyo `entityTransform` sigue al puntero; parallax en capas 3D.
-- Técnicas: `requestAnimationFrame`, `IntersectionObserver`, CSS `transform-style: preserve-3d`, `perspective`, `DOMMatrix`.
-- Riesgos: jank, mareo por movimiento, fallback en dispositivos sin soporte 3D.
-- ¿Pide skill?: No.
+### Nivel 0 — Reposo
 
-### 4 Física/estado
+Estático. Solo HTML/CSS de presentación. Sin JS de comportamiento, sin 3D.
 
-- Descripción breve: gráficos por código, sin frameworks (`D:4` = WebGL/WebGPU vanilla, shaders simples, raycasting manual; sin Three.js).
-- Ejemplos: partículas en WebGPU; shader de gradiente/ondas; picking por raycasting escrito a mano.
-- Técnicas: WebGL2/WebGPU, GLSL/WGSL básico, buffers y matrices, hit-testing manual.
-- Riesgos: costo de implementación, depuración, compatibilidad entre plataformas.
-- ¿Pide skill?: No, pero es caro; si crece, parar y consultar.
+- **Ejemplos:** landing, hero estático, grillas, tarjetas, tipografía.
+- **Técnicas:** layout, tipografía, color, semántica.
+- **Riesgos:** bajos.
+- **¿Pide skill?** No.
 
-### 5 Sistemas acoplados
+---
 
-- Descripción breve: varias piezas complejas coordinadas (`D:5` = Three.js, shaders avanzados, GLSL, postprocesado, 3D + física/audio).
-- Ejemplos: escena con sombras y postprocesado reactivo a audio; 3D + motor de física; pipeline de render complejo.
-- Técnicas: Three.js, GLSL avanzado, postprocesado, motores de física/audio.
-- Riesgos: dependencias externas, tamaño del bundle, mantenimiento; requiere autorización explícita.
-- ¿Pide skill?: Sí: evaluar skill o librería con autorización previa.
+### Nivel 1 — Declarativa
 
-## Aclaración sobre el eje D
+CSS `transition` y `@keyframes`. JS solo para togglear clases o estados
+simples. Primer contacto con 3D declarativo.
 
-El 3D declarativo nativo **BAJA** el nivel: una etiqueta puede ser nivel 1–2 (`<model>` / `<model-viewer>` estático u órbita simple). El 3D programático **SUBE** el nivel: WebGL/WebGPU a mano es nivel 4 y Three.js es nivel 5.
+- **Ejemplos (P/O/I):** hover en botones, fade-in al cargar, slide de menú,
+  spinner, shake.
+- **Ejemplos (D):** un modelo 3D incrustado con `<model>` o `<model-viewer>`
+  **sin interacción**: se muestra, gira solo o queda fijo. El navegador
+  o el Web Component hacen todo el trabajo.
+- **Técnicas:** `transform`, `opacity`, `@keyframes`,
+  `transition-timing-function`, `<model>`, `<model-viewer>`.
+- **Riesgos:** animar `width/height/top/left` (jank). Usar `transform`
+  y `opacity`.
+- **¿Pide skill?** No.
+
+---
+
+### Nivel 2 — Imperativa simple
+
+JS con `requestAnimationFrame` o eventos, **un solo sistema** en juego.
+3D declarativo ya con interacción básica.
+
+- **Ejemplos (P/O/I):** un objeto que sigue al cursor con `lerp`, contador
+  animado, toggle con estado.
+- **Ejemplos (D):** visor 3D con `<model-viewer>` y controles de órbita/zoom,
+  o botón de *play* para reproducir la animación pregrabada del modelo.
+- **Técnicas:** `rAF`, `addEventListener`, estado local, `lerp`, easing,
+  `camera-controls` de `<model-viewer>`.
+- **Riesgos:** listeners y timers sin limpiar (memory leaks).
+- **¿Pide skill?** No.
+
+---
+
+### Nivel 3 — Scroll, cursor y 3D declarativo animado
+
+**Este es el borde cómodo de nuestro stack actual.**
+
+Múltiples capas coordinadas, tracking suavizado, scroll-linked real. 3D
+declarativo disparado por scroll o interacción. CSS 3D puro.
+
+- **Ejemplos (P/O/I):** hero parallax de 3–4 capas, ilustración que sigue
+  al mouse con inercia, secciones que se revelan al scroll, mouse-trail.
+- **Ejemplos (D):** modelo 3D que se “abre” al hacer scroll, varios visores
+  3D coordinados, escena de cubos 3D en CSS con `transform-style: preserve-3d`
+  y `perspective`.
+- **Técnicas:** `IntersectionObserver`, `scroll` pasivo, `translate3d`,
+  `will-change`, `clamp`, unificar `pointer` y `touch`, respetar
+  `prefers-reduced-motion`, `preserve-3d`, `perspective`.
+- **Riesgos:** jank en scroll, listeners no pasivos, accesibilidad
+  (reduced-motion, teclado).
+- **¿Pide skill?** **No. Aquí termina lo que se hace cómodo sin instalar nada.**
+
+---
+
+### Nivel 4 — Física, estado y 3D programático vanilla
+
+Máquinas de estado, física simple (resortes, damping, momentum), múltiples
+objetos interactuando, canvas 2D o SVG animado. 3D con WebGL/WebGPU
+**sin librería**.
+
+- **Ejemplos (P/O/I):** cards que se doblan con física al arrastrar,
+  partículas que huyen del cursor, drag con inercia, botones magnéticos,
+  física de resortes en menús.
+- **Ejemplos (D):** shaders simples a mano en GLSL, cámara controlada
+  por código, raycasting manual sobre un modelo, partículas 3D,
+  postprocesado básico. Sin Three.js.
+- **Técnicas:** springs (Hooke), integración de Euler/Verlet,
+  máquinas de estado, `<canvas>` 2D, loop robusto, `resize` /
+  `orientationchange` / `visibilitychange`, WebGL crudo, WebGPU crudo,
+  shaders GLSL.
+- **Riesgos:** complejidad exponencial, performance, accesibilidad seria
+  (teclado, fallback sin animación).
+- **¿Pide skill?** **Probablemente no, pero duele.** Aquí empieza a tener
+  sentido preguntarse si conviene una mini-librería o seguir vanilla.
+
+---
+
+### Nivel 5 — Sistemas acoplados
+
+Múltiples sistemas interactuando: parallax + física + partículas + audio
++ estado + 3D complejo. Performance crítica.
+
+- **Ejemplos:** escena 3D con Three.js, shader de distorsión avanzado,
+  partículas con colisiones, experiencia inmersiva full-screen con audio
+  reactivo, postprocesado.
+- **Técnicas:** Three.js (o similar), GLSL avanzado, `Web Audio`,
+  optimización de GPU, `InstancedMesh`, render targets.
+- **Riesgos:** accesibilidad casi imposible sin fallbacks, peso,
+  compatibilidad, mantenibilidad.
+- **¿Pide skill?** **Sí, evaluar explícitamente.**
+
+---
 
 ## Tabla resumen
 
-| Nivel | Nombre | 3D típico | Librería/Skill |
-| --- | --- | --- | --- |
-| 0 | Reposo | Sin 3D (`D:0`) | Ninguna |
-| 1 | Declarativa | `<model>` / `<model-viewer>` estático | Ninguna (Web Component) |
-| 2 | Imperativa simple | Órbita, zoom, play de animación pregrabada | Ninguna (API nativa) |
-| 3 | Scroll/cursor | 3D declarativo animado; CSS 3D `preserve-3d` | Ninguna |
-| 4 | Física/estado | WebGL/WebGPU vanilla, shaders simples | Ninguna (código propio) |
-| 5 | Sistemas acoplados | Three.js, GLSL avanzado, postprocesado | Evaluar skill o librería |
+| Nivel | Nombre | JS | Librería | 3D típico | Skill nueva | Ejemplo |
+|-------|--------|----|----------|-----------|-------------|---------|
+| 0 | Reposo | No | No | — | No | Landing estática |
+| 1 | Declarativa | Poco | No | `<model>` estático | No | Hover, fade-in, ficha 3D |
+| 2 | Imperativa simple | Sí | No | `<model>` con órbita/play | No | Cursor follower, visor 3D |
+| 3 | Scroll/cursor | Sí | No | 3D declarativo por scroll, CSS 3D | **No (borde)** | Parallax multi-capa |
+| 4 | Física/estado | Sí | No (duele) | WebGL/WebGPU vanilla, shaders | Evaluar | Drag con inercia, shader simple |
+| 5 | Sistemas acoplados | Sí | Probable | Three.js, GLSL avanzado | **Sí, evaluar** | Experiencia inmersiva |
 
-## Borde sin skills
-
-El nivel 3 es el techo cómodo del stack actual; ahora incluye 3D declarativo animado por scroll/interacción. El nivel 4 es posible pero caro. El nivel 5 justifica evaluar skill o librería.
+---
 
 ## Nota sobre el 3D nativo
 
-`<model>` es un elemento HTML nativo emergente: Apple lo presentó en WWDC26 para iOS, iPadOS, macOS y visionOS ([sesión de Apple](https://developer.apple.com/videos/play/wwdc2026/215/)). `<model-viewer>` es el Web Component actual para 3D sin Three.js. WebGPU ya es estable en los navegadores principales desde finales de 2025. Esto es contexto técnico, no una recomendación de instalar nada.
+Hay dos familias de 3D y no conviene confundirlas:
+
+- **3D declarativo nativo.** El elemento `<model>` es una etiqueta HTML
+  emergente presentada por Apple en 2026 para iOS, iPadOS, macOS y
+  visionOS. Renderiza modelos (USDZ en Apple, glTF/GLB en el resto) como
+  una imagen, sin dependencias de JS. Hoy la opción utilizable en la
+  mayoría de navegadores es el Web Component `<model-viewer>`, que
+  también evita Three.js. **Esta familia mantiene el nivel bajo: 1–2–3.**
+
+- **3D programático.** WebGL y WebGPU a mano, o con librerías como
+  Three.js. WebGPU ya es estable en Chrome, Edge, Firefox y Safari
+  desde finales de 2025. **Esta familia sube el nivel: 4 con WebGL
+  vanilla, 5 con Three.js o shaders complejos.**
+
+Regla mental: **etiqueta → nivel bajo; código de graphics → nivel alto.**
+
+---
+
+## Reglas de uso
+
+1. **Declarar nivel esperado** por eje y global **antes de empezar**, y
+   anotarlo en `BITACORA.md`.
+2. **Parar y consultar** si en el camino se necesita nivel 4 o 5 no
+   previsto. No instalar librerías por cuenta propia.
+3. **Registrar el nivel real** (no el planeado) **al terminar**.
+4. **Regla de parada:** si el experimento pide nivel 5 y no hay skill
+   instalada → declarar “fuera de alcance” o proponer una skill.
+5. **Accesibilidad:** desde nivel 3 respetar `prefers-reduced-motion`.
+   Desde nivel 4 ofrecer fallback estático y control por teclado.
+6. **Performance:** desde nivel 3 medir FPS en DevTools y anotarlo.
+7. **Honestidad:** reportar si el nivel real difiere del planeado, en
+   cualquier dirección. Un experimento que salió nivel 2 cuando se
+   planeó 4 es una buena noticia; al revés, una señal de alarma.
+
+---
+
+## El borde sin skills, en una línea
+
+> **Nivel 3 es el techo cómodo con el stack actual.**
+> Incluye 3D declarativo animado con `<model>`/`<model-viewer>` y
+> CSS 3D. Nivel 4 es posible pero caro (más código, más bugs, más
+> accesibilidad pendiente). Nivel 5 ya justifica evaluar una skill o
+> librería —por eso lo dejamos como frontera explícita, no como
+> “a ver qué pasa”.

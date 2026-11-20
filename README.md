@@ -2,7 +2,7 @@
 
 Laboratorio personal para explorar los límites de un flujo de creación web con OpenCode, Zed y modelos de IA, usando HTML/CSS/JS vanilla y, más adelante, posibles webapps/apps con React Native.
 
-El registro general de cambios vive en [BITACORA.md](./BITACORA.md), separado por proyecto. Las directrices operativas están en [AGENTS.md](./AGENTS.md). La escala de complejidad incluye ahora un eje 3D (D): [ESCALA.md](./ESCALA.md).
+El registro general de cambios vive en [BITACORA.md](./BITACORA.md), separado por proyecto. Las directrices operativas están en [AGENTS.md](./AGENTS.md). Existe [ESCALA.md](./ESCALA.md) con los cuatro ejes de complejidad (P/O/I/D).
 
 ## Estructura
 

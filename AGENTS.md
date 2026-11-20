@@ -41,8 +41,8 @@ No introduzcas frameworks, build tools ni dependencias externas salvo autorizaci
 
 ## Escala de complejidad
 
-La escala vive en `ESCALA.md` (ECE‑4D, niveles 0–5, ejes P, O, I y D).
+La escala de complejidad es `ESCALA.md` (ECE·4D, niveles 0–5) y es la fuente de verdad para medir los experimentos.
 
-Todo experimento debe etiquetarse con los cuatro ejes: `P:x, O:y, I:z, D:w → global:n`, donde el nivel global es el máximo de los cuatro.
+Todo experimento debe etiquetarse con los cuatro ejes: `P:x, O:y, I:z, D:w → global:n`, donde el nivel global es el máximo de los cuatro. La etiqueta se declara **antes de empezar** (nivel esperado) y **al terminar** (nivel real).
 
-Si un experimento requiere D:4 o D:5 y no estaba previsto, parar y consultar. No introducir Three.js ni librerías de 3D sin autorización explícita.
+Si se requiere nivel 4 o 5 y no estaba previsto, parar y consultar. No introducir Three.js ni librerías de 3D sin autorización explícita.
